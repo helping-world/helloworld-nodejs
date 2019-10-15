@@ -5,7 +5,12 @@ pipeline {
     skipDefaultCheckout true
   }
   stages {
-    stage('Test') {
+     agent {
+        kubernetes {
+          label 'nodejs-app-pod'
+          yamlFile 'nodejs-pod.yaml'
+        }
+      } {
       agent { label 'nodejs-app' }
       steps {
         checkout scm
